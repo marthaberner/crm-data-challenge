@@ -1,27 +1,30 @@
-class UrlChallenge
+class DataChallenge
+
   def initialize(data)
     @data = data
   end
 
-  def unemployed
-    result = []
-    people = @data[:people]
-    people.each do |person|
-      if person[:employments].empty?
-        result << person[:first_name]
+  def company_employees
+    company_employees = []
+    @data[:people].each do |person|
+      person[:employments].each do |employment|
+        @data[:companies].each do |company|
+          if company[:id] == employment[:company_id]
+            company_employees << {
+              :name => company[:name],
+              :employees => [
+                {
+                  :id => person[:id],
+                  :first_name => person[:first_name],
+                  :last_name => person[:last_name],
+                  :title => employment[:title]
+                }
+              ]
+            }
+          end
+        end
       end
     end
-    result
-  end
-
-  def companies(company_id)
-      result = []
-    companies = @data[:companies]
-    companies.each do |company|
-      if  company[:id] == company_id
-        result << company[:name]
-      end
-    end
-    result
+    company_employees
   end
 end
