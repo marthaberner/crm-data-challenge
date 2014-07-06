@@ -1,6 +1,6 @@
 require 'rspec'
 require 'data_challenge'
-require_relative '../bin/test_data'
+require_relative '../data/test_data'
 
 describe DataChallenge do
   it 'returns an array of companies, and the people who work for them' do
